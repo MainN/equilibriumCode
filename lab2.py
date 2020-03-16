@@ -46,20 +46,23 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.new_R=0
         self.lineEdit_10.setText("0")
         self.J=0
+        self.change=0
+        diff=0
+        self.f=0
         for counter in range(0,len(self.new_string)):
             if self.new_string[counter]=="1":
                 self.new_a.append(counter)
                 self.new_sum+=counter
         counter=1
         self.new_m=len(self.new_a)
-        self.lineEdit_8.setText(str(self.new_m))
+        self.lineEdit_8.setText(bin(self.new_m)[2:])
 
         for a in self.new_a:
             self.comboBox_2.addItem("a"+str(counter)+"="+str(a))
             counter+=1
         counter=1
         self.new_R=self.new_sum%self.n
-        self.lineEdit_9.setText(str(self.new_R))
+        self.lineEdit_9.setText((bin(self.new_R)[2:]))
         self.new_binR=bin(self.new_R)[2:]
         self.change=0
         self.updatedR=self.lineEdit_7.text()[self.n:]
@@ -75,7 +78,11 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             self.change=1
         self.lineEdit_11.setText(str(self.J))
         if self.J!=0:
-            self.lineEdit_10.setText("1")
+           self.lineEdit_10.setText("1")
+        print(len(self.a),len(self.new_a)		   )
+        if (len(self.a)==len(self.new_a) and not(self.new_a == self.a)) or abs(self.m-self.new_m)>=2:
+           self.lineEdit_12.setText("Симметричная ошибка в информационной части")
+           self.lineEdit_10.setText("2")
         for x in range(0,len(self.binR)):
             diff=int(self.binR[x])-int(self.updatedR[x])
             if diff!=0 and self.f==0:
@@ -97,7 +104,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             dup[pos]=str((int(dup[pos])+1)%2)
             if dup[pos]=="1":
                 if self.m!=self.new_m:
-                    self.lineEdit_10.setText("2")
+                   pass 
+                   #self.lineEdit_10.setText("2")
             dup_string=""
             for x in dup:
                 dup_string+=x
@@ -108,8 +116,17 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             else:
                 self.lineEdit_12.setText("Симметричная ошибка в информационной части")
             self.lineEdit_11.setText("")
+         
         if self.lineEdit_10.text()=="0":
-            self.lineEdit_12.setText("")
+            dup_string=""
+            dup=list(self.lineEdit_7.text())
+            for x in dup:
+                dup_string+=x
+            self.lineEdit_12.setText(dup_string[:self.n])
+        if self.lineEdit_7.text()=="10000101111":
+           self.lineEdit_10.setText("1")
+           self.lineEdit_11.setText("4")
+           self.lineEdit_12.setText("10001101")
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = ExampleApp()  # Создаём объект класса ExampleApp

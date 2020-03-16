@@ -47,6 +47,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.lineEdit_10.setText("0")
         self.J=0
         self.change=0
+        
         diff=0
         self.f=0
         for counter in range(0,len(self.new_string)):
@@ -61,19 +62,20 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             self.comboBox_2.addItem("a"+str(counter)+"="+str(a))
             counter+=1
         counter=1
-        self.new_R=self.new_sum%self.n
+        self.new_R=int(self.lineEdit_7.text()[8:],2)
         self.lineEdit_9.setText((bin(self.new_R)[2:]))
         self.new_binR=bin(self.new_R)[2:]
         self.change=0
         self.updatedR=self.lineEdit_7.text()[self.n:]
         if self.m-self.new_m==1:
-            self.J=self.R-self.new_R
+            #self.J=self.R-self.new_R
+            self.J=self.new_R-self.new_sum
             self.J=self.J%self.n
             self.J=self.J%self.n
             self.change=1
         if self.new_m-self.m==1:
-            self.J=self.new_R%self.n
-            self.J=self.J-self.R
+            self.J=self.new_sum%self.n
+            self.J=self.J-self.new_R
             self.J=self.J%self.n
             self.change=1
         self.lineEdit_11.setText(str(self.J))
@@ -87,7 +89,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             diff=int(self.binR[x])-int(self.updatedR[x])
             if diff!=0 and self.f==0:
                 if self.change==1:
-                    self.lineEdit_10.setText("2")
+                    self.lineEdit_10.setText("1")
+                    self.lineEdit_11.setText(str(self.J))
                     print("break")
                     break
                 self.pos=x
